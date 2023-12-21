@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "pyrtr"
+version = "0.1.0"
+description = "RTR server skeleton written in Python"
+authors = ["Tomas Hlavacek <tmshlvck@gmail.com>"]
+readme = "README.md"
+license = "GPL-2.0"
+packages = [{include = "pyrtr"}]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+pyrtr = "pyrtr:main"
