@@ -33,7 +33,7 @@ RTR clients:
 
 ### BIRD test
 
-BIRD config snipped used for testing:
+BIRD config snippet used for testing:
 ```
 roa4 table rtr4;
 roa6 table rtr6;
