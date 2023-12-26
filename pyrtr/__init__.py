@@ -223,7 +223,7 @@ class RTRConnHandler(socketserver.BaseRequestHandler):
 
     ERROR_TYPE = 10
     def handle_error(self, buf: bytes):
-        dbg(">Error: {str(buf)}")
+        dbg(f">Error: {str(buf)}")
  
 
     def handle(self):
