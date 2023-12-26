@@ -190,10 +190,13 @@ class RTRConnHandler(socketserver.BaseRequestHandler):
 
     SERIAL_QUERY_TYPE = 1
     SERIAL_QUERY_LEN = 12
-    def handle_serial_query(self, buf: bytes):
+    def handle_serial_query(self, buf: bytes, sess_id: int):
         serial = struct.unpack('!I', buf)[0]
         dbg(f">Serial query: {serial}")
-        self.server.db.set_serial(0)
+        if sess_id:
+            self.server.db.set_serial(serial)
+        else:
+            self.server.db.set_serial(0)
         self.send_cacheresponse()
 
         for asn, ipnet, maxlen in self.server.db.get_announcements4(serial):
@@ -238,10 +241,13 @@ class RTRConnHandler(socketserver.BaseRequestHandler):
             proto_ver, pdu_type, sess_id, length = self.decode_header(b)
             dbg(f">Header proto_ver={proto_ver} pdu_type={pdu_type} sess_id={sess_id} length={length}")
 
+            if sess_id:
+                self.session_id = sess_id
+
             if pdu_type == self.SERIAL_QUERY_TYPE:
                 b = self.request.recv(self.SERIAL_QUERY_LEN - self.HEADER_LEN,
                         socket.MSG_WAITALL)
-                self.handle_serial_query(b)
+                self.handle_serial_query(b, sess_id)
 
             elif pdu_type == self.RESET_TYPE:
                 self.handle_reset()
