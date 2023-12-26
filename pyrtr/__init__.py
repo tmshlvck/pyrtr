@@ -229,6 +229,8 @@ class RTRConnHandler(socketserver.BaseRequestHandler):
     def handle(self):
         while True:
             b = self.request.recv(self.HEADER_LEN, socket.MSG_WAITALL)
+            if len(b) == 0:
+                break
             proto_ver, pdu_type, sess_id, length = self.decode_header(b)
             dbg(f">Header proto_ver={proto_ver} pdu_type={pdu_type} sess_id={sess_id} length={length}")
 
