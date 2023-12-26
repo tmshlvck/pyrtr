@@ -20,9 +20,11 @@ import socketserver
 import struct
 import ipaddress
 import csv
+import os
+import sys
 
 LISTEN_HOST, LISTEN_PORT = "0.0.0.0", 15432
-VRPS_FILE = 'vrps.csv'
+VRPS_FILE = os.path.join(sys.path[0], "vrps.csv")
 
 def dbg(m: str):
     print(m)
