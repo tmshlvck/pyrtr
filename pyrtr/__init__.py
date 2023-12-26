@@ -238,6 +238,9 @@ class RTRConnHandler(socketserver.BaseRequestHandler):
             proto_ver, pdu_type, sess_id, length = self.decode_header(b)
             dbg(f">Header proto_ver={proto_ver} pdu_type={pdu_type} sess_id={sess_id} length={length}")
 
+            if sess_id:
+                self.session_id = sess_id
+
             if pdu_type == self.SERIAL_QUERY_TYPE:
                 b = self.request.recv(self.SERIAL_QUERY_LEN - self.HEADER_LEN,
                         socket.MSG_WAITALL)
